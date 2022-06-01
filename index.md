@@ -6,6 +6,6 @@ Every company has its own style guide: a set of conventions or guidelines about 
 
 This project holds the [C# Style Guide][csharp], [SQL Server Style Guide][sqlserver], and [Vue.js Style Guide][vue].
 
-[csharp]: https://know-history.github.io/styleguide/csharp-style.md
-[sqlserver]: https://know-history.github.io/styleguide/sqlserver-style.md
-[vue]: https://know-history.github.io/styleguide/vue-style.md
+[csharp]: https://know-history.github.io/styleguide/csharp-style
+[sqlserver]: https://know-history.github.io/styleguide/sqlserver-style
+[vue]: https://know-history.github.io/styleguide/vue-style
