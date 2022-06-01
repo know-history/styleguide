@@ -1,5 +1,4 @@
 # SQL Server at Know History Guide
-
 This style guide is for SQL Server code and database development, and is the default style for T-SQL at Know History. Which naming convention is used, depends on each person and organization. This document aims to clarify naming standards for SQL Server under the Know History umbrella.
 
 ## Naming Conventions
@@ -238,10 +237,10 @@ VALUES ('Example', '2022-05-30')
 ### Formatting
 SQL statements should be arranged in an easy-to-read manner. When statements are written all to one line or not broken into smaller easy-to-read chunks, more complicated statements are very hard to decipher. By doing this and aliasing table names when possible, you will make column additions and maintenance of queries much easier.
 
-### NOCOUNT
+## NOCOUNT
 Use SET NOCOUNT ON at the beginning of your SQL batches, stored procedures for report output and triggers in production environments, as this suppresses messages like '(1 row(s) affected)' after executing INSERT, UPDATE, DELETE and SELECT statements. This improves the performance of stored procedures by reducing network traffic.
 
-### Code Commenting
+## Code Commenting
 Important code blocks within stored procedures and user defined functions should be commented. Brief functionality descriptions should be included where important or complicated processing is taking place.
 
 Stored procedures and functions should include at a minimum a header comment with a brief overview of the batches functionality.
@@ -254,7 +253,7 @@ block comments use ( /* ) to begin and ( */ ) to close
 */
 ```
 
-### Data Access and Transactions
+## Data Access and Transactions
 Always access tables in the same order in all your stored procedures and triggers consistently. This helps to avoid deadlocks. Other things to keep in mind to avoid deadlocks are: Keep your transactions as short as possible. Touch as little data as possible during a transaction. 
 
 Never, ever wait for user input in the middle of a transaction. Do not use higher level locking hints or restrictive isolation levels unless they are absolutely needed. Make your front-end applications  deadlock-intelligent, that is, these applications should be able to resubmit the transaction in case the previous transaction fails with error 1205. In your applications, process all the results returned by SQL Server immediately so that the locks on the processed rows are released, hence no blocking.
@@ -291,7 +290,7 @@ BEGIN TRANSACTION
 END
 ```
 
-### Error Handling
+## Error Handling
 Although some procedural processes may not require additional error handling, as shown above in the Data Access and Transactions section there may be instances within your stored procedures you wish to handle errors more gracefully. You can use error handling to rollback entire transactions if one piece fails, report a single failed process within a procedure back to the calling application…etc. There are some examples below of proper implementation of error handling within a SQL Server stored procedure.
 
 ```sql
@@ -329,7 +328,7 @@ BEGIN CATCH
 END CATCH
 ```
 
-### Foreign Key and Check Constraints
+## Foreign Key and Check Constraints
 Unique foreign key constraints should ALWAYS be enforced across alternate keys whenever possible. Not enforcing these constraints will compromise data integrity.
 
 Perform all your referential integrity checks and data validations using constraints (foreign key and check constraints) instead of triggers, as they are faster. Limit the use of triggers to auditing, custom tasks
@@ -337,7 +336,7 @@ and validations that cannot be performed using constraints.
 
 Constraints save you time as well, as you don't have to write code for these validations, allowing the RDBMS to do all the work for you!
 
-### Cursor Usage
+## Cursor Usage
 Try to avoid server side cursors as much as possible. Always stick to a 'set-based approach' instead of a 'procedural approach' for accessing and manipulating data. Cursors can often be avoided by using SELECT
 statements instead, or at worst, temporary tables and/or table variables.
 
@@ -366,11 +365,11 @@ CLOSE personProcessCursor
 DEALLOCATE personProcessCursor
 ```
 
-### Temporary Tables and Table Variables
+## Temporary Tables and Table Variables
 Use temporary tables (e.g. #oldPerson) only when absolutely necessary. When temporary storage is needed within a SQL statement or procedure, it’s recommended that you use local table variables (e.g. @oldPersonId) instead if the amount of data stored is relatively small. This eliminates unnecessary locks on system tables
 and reduces the number of recompiles on stored procedures. This also increases performance as table variables are created in RAM, which is significantly faster than disk. 
 
-### Database Design Best Practices
+## Database Design Best Practices
 Using SQL Servers RDBMS platform to its fullest potential is encouraged. Below are a few tips to aide in maximizing the built in features of relational database structures.
 
 - Utilize enforced relationships between tables to protect data integrity when possible. Always remember...garbage in....garbage out. The data will only ever be as good as the integrity used to store it.
