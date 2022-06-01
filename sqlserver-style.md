@@ -77,10 +77,10 @@ Constraints should be named using the following structure:
 A two letter prefix gets applied to the constraint name depending on the type:
 
 ```
-Primary Key: Pk
-Foreign Key: Fk
-Check      : Ck
-Unique     : Uq
+Primary Key : Pk
+Foreign Key : Fk
+Check       : Ck
+Unique      : Uq
 ```
 
 #### _Examples_
