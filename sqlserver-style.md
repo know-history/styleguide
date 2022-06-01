@@ -8,22 +8,22 @@ When naming your database tables, give consideration to other steps in the devel
 
 You want to keep the name as simple and short as possible. The naming convention for a table name should be as follows:
 
-#### *__Singular Names__*
+#### _Singular Names_
 Table names should be singular, for example, `Customer` instead of `Customers`. This rule is applicable because tables are patterns for storing an entity as a record – they are analogous to Classes serving up class instances. And if for no other reason than readability, you avoid errors due to the pluralization of English nouns in the process of database development. For instance, activity becomes activities, ox becomes oxen, person becomes people or persons etc. - Intersection tables that handle "many to many" relationships, e.g. Registry and Person tables should be written as `RegistryPerson`.
 
-#### *__Prefixes__*
+#### _Prefixes_
 Don’t use prefixes unless they are deemed necessary to help you organize your tables into related groups or distinguish them from other unrelated tables. Generally speaking, prefixes will cause you to have to type a lot of unnecessary characters.
 
-#### *__Notation__*
+#### _Notation_
 For all parts of the table name, including prefixes, use Pascal Case. Using this notation will distinguish your table names from SQL keywords. PascalCase also reduces the need for underscores to visually separate words in names.
 
-#### *__Special Characters__*
+#### _Special Characters_
 For table names, underscores should not be used. The underscore character has a place in other object names but, not for tables. Using PascalCase for your table name allows for the upper-case letter to denote the first letter of a new word or name. Thus there is no need to do so with an underscore character. Do not use numbers in your table names either. This usually points to a poorly-designed data model or irregularly-partitioned tables. Do not use spaces in your table names either.
 
-#### *__Abbreviations__*
+#### _Abbreviations_
 Avoid using abbreviations if possible. Use `Accounts` instead of `Accts` and `Hours` instead of `Hrs`. Not everyone will always agree with you on what your abbreviations stand for and this makes it simple to read and understand for both developers and non-developers. Avoid using acronyms as well. If exceptions to this rule are deemed necessary, ensure that the same convention is followed by all project members and that this is noted in the project's Readme file.
 
-*__Examples__*
+#### _Examples_
 ```
 Person
 PersonDetail
@@ -34,28 +34,28 @@ RegistryPerson
 ### Columns (incl. Primary and Foreign Keys)
 When naming your columns, keep in mind that they are members of the table, so they do not need the any mention of the table name in the name. When writing a query against the table, you should be prefixing the  field name with the table name or an alias anyway. Just like with naming tables, avoid using abbreviations, acronyms or special characters. All column names should use PascalCase to distinguish them from SQL keywords.
 
-#### *__Primary Keys__*
+#### _Primary Keys_
 For fields that are the primary key for a table and uniquely identify each record in the table, the name should simply be `[tableName] + "Id"` (e.g. in an Ancestor table, the primary key field would be `AncestorId`. Though `AncestorId` conveys no more information about the field than `Ancestor.Id` and is a far wordier implementation, it is still preferable to having to type brackets around `Id`.
 
-#### *__Foreign Keys__*
+#### _Foreign Keys_
 Foreign key fields should have the exact same name as they do in the parent table where the field is the primary. For example, in the Forebearer table the primary key field might be `ForebearerId`. In a Person table where the ForebearerId may be kept, it would also be `ForebearerId`. There is one exception to this rule, which is when you have more than one foreign key field per table referencing the same primary key field in another table. In this situation, it might be helpful to add a descriptor before the field name. An example of this is if you had an Address table. You might have another table with foreign key fields like `HomeAddressId`, `WorkAddressId`, `MailingAddressId`, or `ShippingAddressId`.
 
-#### *__Prefixes__*
+#### _Prefixes_
 Do not prefix your fields with `fld_` or `Col_` as it should be obvious in SQL statements which items are columns (before or after the FROM clause). Do not use a data type prefix for the field either, for example, `IntCustomerId` for a numeric type or `VcName` for a varchar type. These "clog up" our naming and add little value.
 
-#### *__Data Type Specific Naming__*
+#### _Data Type Specific Naming_
 Bit fields should be given affirmative boolean names like `IsDeleted`, `HasPermission`, or `IsValid` so that the meaning of the data in the field is not ambiguous. If the field holds date and/or time information, the word "Date" or "Time" should appear somewhere in the field name. It is sometimes appropriate to add the unit of time to the field name also, especially if the field holds data like whole numbers ("3" or "20"). Those fields should be named like `RuntimeHours` or `ScheduledMinutes`.
 
-#### *__Field Name Length__*
+#### _Field Name Length_
 Field names should be no longer than 50 characters and all should strive for less lengthy names if possible. You should, however, not sacrifice readability for brevity and avoid using abbreviations unless it is absolutely necessary.
 
-#### *__Special Characters__*
+#### _Special Characters_
 Field names should contain only letters and numbers. No special characters,  underscores or spaces should be used.
 
 ### Indexes
 Indexes will remain named as the SQL Server default, unless the index created is for a special purpose. All primary key fields and foreign key fields will be indexed and named in the SQL Server default. Any other index will be given a name indicating it’s purpose.
 
-*__Naming Convention__*
+#### _Naming Convention_
 Follow this structure in the case of special-purpose indexes, where `U/N` is for unique or non-unique and `IX_` matches the default prefix that SQL Server assigns indexes:
   
 ```
@@ -66,14 +66,14 @@ Follow this structure in the case of special-purpose indexes, where `U/N` is for
 Constraints are at the field/column level so the name of the field the constraint is on should be used in the name. The type of constraint should be noted also. Constraints are also unique to a particular table and field combination, so you should include the table
 name also to ensure unique constraint names across your set of database tables.
 
-*__Naming Convention__*
+#### _Naming Convention_
 Constraints should be named using the following structure:
 
 ```
 {ConstraintAbbreviation}{TableName}_{FieldName}
 ```
 
-*__Prefixes__*
+#### _Prefixes_
 A two letter prefix gets applied to the constraint name depending on the type:
 
 ```
@@ -83,7 +83,7 @@ Check      : Ck
 Unique     : Uq
 ```
 
-*__Examples__*
+#### _Examples_
 
 ```
 PkPerson_PersonId
@@ -95,22 +95,22 @@ UqAncestor_KnowHistoryId
 ### Views
 Views follow many of the same rules that apply to naming tables. There are only two differences. If your view combines entities with a join condition or where clause, be sure to combine the names of the entities that are joined in the name of your view.
 
-*__Prefixes__*
+#### _Prefixes_
 While it is pointless to prefix tables, it can be helpful for views. Prefixing your views with `vw` is a helpful reminder that you're dealing with a view, and not a table. Whatever type of prefix you choose to apply, use at least 2 letters and not just `v` because a prefix should use more than one letter or its meaning can be ambiguous. 
 
-*__View Types__*
+#### _View Types_
 Some views are simply tabular representations of one or more tables with a filter applied or because of security procedures (users given permissions on views instead of the underlying table(s) in some cases). Some views are used to generate report data with more specific values in the WHERE clause. Naming your views should be different depending on the type or purpose of the view. For simple views that just join one or more tables with no selection criteria, combine the names of the tables joined. 
 
-*__Examples__*
+#### _Examples_
 Joining the `Person` and `HarvestingArea` table to create a view of people and their respective harvesting areas should be given a name like `vwPersonHarvestingArea`. Views created expressly for a report should have an additional prefix of Report applied to them, e.g. `vwReportPersonHarvestingArea`.
 
 ### Stored Procedures
 Unlike a lot of the other database objects discussed here, stored procedures are not logically tied to any table or column. Typically though, stored procedures perform one or more common database activities (Read, Insert, Update, and/or Delete) on a table, or another action of some kind. Since stored procedures always perform some type of operation, it makes sense to use a name that describes the operation they perform. Use a verb to describe the type of operation, followed by the table(s) the operations occur on.
 
-*__Prefixes__*
+#### _Prefixes_
 A 3 letter prefix `usp` (user-created stored procedure) is applied to the beginning of the stored procedure name. Never use `sp_`, `xp_` or `dt_` as this will cause SQL Server to check the Master database for this procedure first, causing a performance hit.
 
-*__Naming Conventions__*
+#### _Naming Conventions_
 Standard stored procedures should be named using the following structure:
 
 ```
@@ -123,7 +123,8 @@ There could be occasion where your procedure returns a scalar value, or performs
 usp{Verb}{Noun}
 ```
 
-*__Examples__* 
+#### _Examples_
+
 ```
 Standard
 -----------------
@@ -147,6 +148,7 @@ A 2 letter prefix `fn` is applied to the beginning of the function name.
 Functions should always be named as a verb, because they will always return a value.
 
 *__Examples__*
+
 ```
 fnGetOpenDate
 fnFormatExcel
@@ -155,13 +157,14 @@ fnFormatExcel
 ### Triggers
 Triggers have many things in common with stored procedures. However, triggers are different than stored procedures in two important ways. First, triggers don't exist on their own. They are dependent upon a table. So it is wise to include the name of this table in the trigger name. Second, triggers can only execute when an Insert, Update, or Delete happens on one or more of the records in the table. So it also makes sense to include the type of action that will cause the trigger to execute.
 
-*__Prefixes__*
+#### _Prefixes_
 A 2 letter prefix `tr` is applied to the beginning of the trigger name.
 
-*__Multiple Operations__*
+#### _Multiple Operations_
 If a trigger handles more than one operation (both INSERT and UPDATE for example) then include both operation abbreviations in your name. 
 
-*__Examples__*
+#### _Examples_
+
 ```
 trPersonInsertUpdate
 trAncestorMove
@@ -170,19 +173,19 @@ trAncestorMove
 ### Variables
 In addition to the general naming standards regarding no special characters, no spaces, and limited use of abbreviations and acronyms, common sense should prevail in naming variables - variable names should be meaningful and natural.
 
-*__Name length limit__*
+#### _Name length limit_
 Variable names should describe its purpose and not exceed 50 characters in length.
 
-*__Prefix__*
+#### _Prefix_
 All variables must begin with the `@` symbol. Do __NOT__ use `@@` to prefix a variable as this signifies a SQL Server system global variable and will affect performance.
 
-*__Case__*
+#### _Case_
 All variables should be written in camelCase.
 
-*__Special Characters__*
+#### _Special Characters_
 Variable names should contain only letters and numbers. No special characters or spaces should be used.
 
-*__Examples__*
+#### _Examples_
 
 ```sql
 @person
