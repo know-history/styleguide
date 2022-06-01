@@ -6,6 +6,13 @@ Every company has its own style guide: a set of conventions or guidelines about 
 
 This project holds the [C# Style Guide][csharp], [SQL Server Style Guide][sqlserver], and [Vue.js Style Guide][vue].
 
+## Benefits
+
+- Provides a specific standard for naming all objects so they look the same or related to the same group
+- Reduces the effort needed to read and understand source code after a long interval of time
+- Enhances the clarity in case of potential ambiguity
+- Provides a better understanding to new people reading code for the first time
+
 [csharp]: https://know-history.github.io/styleguide/csharp-style
 [sqlserver]: https://know-history.github.io/styleguide/sqlserver-style
 [vue]: https://know-history.github.io/styleguide/vue-style
