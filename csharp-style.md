@@ -18,6 +18,8 @@ Following a consistent set of naming conventions in the development of a framewo
     acronyms. For example, `MyRpc` instead of ~~`MyRPC`~~.
 *   Names of interfaces start with `I`, e.g. `IInterface`.
 
+Use [Allman style](http://en.wikipedia.org/wiki/Indent_style#Allman_style) braces, where each brace begins on a new line. A single line statement block can go without braces but the block must be properly indented on its own line and must not be nested in other statement blocks that use braces. One exception is that a `using` statement is permitted to be nested within another `using` statement by starting on the following line at the same indentation level, even if the nested `using` contains a controlled block.
+
 #### Files
 *   Filenames and directory names are `PascalCase`, e.g. `MyFile.cs`.
 *   Where possible the file name should be the same as the name of the main
@@ -49,17 +51,15 @@ Following a consistent set of naming conventions in the development of a framewo
 ### Whitespace rules
 *   A maximum of one statement per line.
 *   A maximum of one assignment per statement.
-*   Indentation of 2 spaces, no tabs.
+*   Indentation of 1 tab.
 *   Column limit: 100.
-*   No line break before opening brace.
-*   No line break between closing brace and `else`.
 *   Braces used even when optional.
 *   Space after `if`/`for`/`while` etc., and after commas.
 *   No space after an opening parenthesis or before a closing parenthesis.
 *   No space between a unary operator and its operand. One space between the
     operator and each operand of all other operators.
 *   Line wrapping:
-    *   In general, line continuations are indented 4 spaces.
+    *   In general, line continuations are indented 1 tab.
     *   Line breaks with braces (e.g. list initializers, lambdas, object
         initializers, etc) do not count as continuations.
     *   For function definitions and calls, if the arguments do not all fit on
@@ -70,112 +70,118 @@ Following a consistent set of naming conventions in the development of a framewo
 
 ### Example
 ```c#
-using System;                                       // `using` goes at the top, outside the
-                                                    // namespace.
+using System;                                           // `using` goes at the top, outside the namespace.
 
-namespace MyNamespace {                             // Namespaces are PascalCase.
-                                                    // Indent after namespace.
-  public interface IMyInterface {                   // Interfaces start with 'I'
-    public int Calculate(float value, float exp);   // Methods are PascalCase
-                                                    // ...and space after comma.
-  }
-
-  public enum MyEnum {                              // Enumerations are PascalCase.
-    Yes,                                            // Enumerators are PascalCase.
-    No,
-  }
-
-  public class MyClass {                            // Classes are PascalCase.
-    public int Foo = 0;                             // Public member variables are
-                                                    // PascalCase.
-    public bool NoCounting = false;                 // Field initializers are encouraged.
-    private class Results {
-      public int NumNegativeResults = 0;
-      public int NumPositiveResults = 0;
-    }
-    private Results _results;                       // Private member variables are
-                                                    // _camelCase.
-    public static int NumTimesCalled = 0;
-    private const int _bar = 100;                   // const does not affect naming
-                                                    // convention.
-    private int[] _someTable = {                    // Container initializers use a 2
-      2, 3, 4,                                      // space indent.
+namespace MyNamespace                                   // Namespaces are PascalCase.
+{                             
+                                                        // Indent after namespace.
+    public interface IMyInterface                       // Interfaces start with 'I'.
+    {                   
+        public int Calculate(float value, float exp);   // Methods are PascalCase ...and space after comma.
     }
 
-    public MyClass() {
-      _results = new Results {
-        NumNegativeResults = 1,                     // Object initializers use a 2 space
-        NumPositiveResults = 1,                     // indent.
-      };
+    public enum MyEnum                                  // Enumerations are PascalCase.
+    {                              
+        Yes,                                            // Enumerators are PascalCase.
+        No,
     }
 
-    public int CalculateValue(int mulNumber) {      // No line break before opening brace.
-      var resultValue = Foo * mulNumber;            // Local variables are camelCase.
-      NumTimesCalled++;
-      Foo += _bar;
-
-      if (!NoCounting) {                            // No space after unary operator and
-                                                    // space after 'if'.
-        if (resultValue < 0) {                      // Braces used even when optional and
-                                                    // spaces around comparison operator.
-          _results.NumNegativeResults++;
-        } else if (resultValue > 0) {               // No newline between brace and else.
-          _results.NumPositiveResults++;
+    public class MyClass                                // Classes are PascalCase.
+    {                                                   
+        public int Foo = 0;                             // Public member variables are PascalCase.
+        public bool NoCounting = false;                 // Field initializers are encouraged.
+    
+        private class Results 
+        {
+            public int NumNegativeResults = 0;
+            public int NumPositiveResults = 0;
         }
-      }
+    
+        private Results _results;                       // Private member variables are _camelCase.
+    
+        public static int NumTimesCalled = 0;
+        private const int _bar = 100;                   // const does not affect naming convention.
+    
+        private int[] _someTable = 
+        {                                               // Container initializers use a 1 tab indent.
+            2, 3, 4,                                      
+        }
 
-      return resultValue;
+        public MyClass() 
+        {
+            _results = new Results 
+            {
+                NumNegativeResults = 1,                 // Object initializers use a 1 tab indent.
+                NumPositiveResults = 1,                  
+            };
+        }
+
+        public int CalculateValue(int mulNumber) 
+        {      
+            var resultValue = Foo * mulNumber;          // Local variables are camelCase.
+            NumTimesCalled++;
+            Foo += _bar;
+
+            if (!NoCounting)                            // No space after unary operator and space after 'if'.
+            {                                                            
+                if (resultValue < 0) {                  // Braces used even when optional and spaces around comparison operator.
+                    _results.NumNegativeResults++;
+                } else if (resultValue > 0) {           // No newline between brace and 'else'/'else if'.
+                    _results.NumPositiveResults++;
+                }
+            }
+
+            return resultValue;                         // Space after closing braces.
+        }
+
+        public void ExpressionBodies() 
+        {
+            // For simple lambdas, fit on one line if possible, no brackets or braces required.
+            Func<int, int> increment = x => x + 1;
+
+            // Closing brace aligns with first character on line that includes the opening brace.
+            Func<int, int, long> difference1 = (x, y) => {
+                var diff = (long)x - y;
+                return diff >= 0 ? diff : -diff;
+            };
+
+            // If defining after a continuation line break, indent the whole body.
+            Func<int, int, long> difference2 =
+                (x, y) => {
+                    var diff = (long)x - y;
+                    return diff >= 0 ? diff : -diff;
+                };
+
+            // Inline lambda arguments also follow these rules. Prefer a leading newline before groups of arguments if they include lambdas.
+            CallWithDelegate(
+                (x, y) => {
+                    var diff = (long)x - y;
+                    return diff >= 0 ? diff : -diff;
+                });
+        }
+
+        void DoNothing() {}                             // Empty blocks may be concise.
+
+        // If possible, wrap arguments by aligning newlines with the first argument.
+        void AVeryLongFunctionNameThatCausesLineWrappingProblems(int longArgumentName,
+                                                                 int p1, int p2) {}
+
+        // If aligning argument lines with the first argument doesn't fit, or is difficult to read, wrap all arguments on new lines with a 1 tab indent.
+        void AnotherLongFunctionNameThatCausesLineWrappingProblems(
+            int longArgumentName, int longArgumentName2, int longArgumentName3) {}
+
+        void CallingLongFunctionName() 
+        {
+            int veryLongArgumentName = 1234;
+            int shortArg = 1;
+            // If possible, wrap arguments by aligning newlines with the first argument.
+            AnotherLongFunctionNameThatCausesLineWrappingProblems(shortArg, shortArg,
+                                                                  veryLongArgumentName);
+            // If aligning argument lines with the first argument doesn't fit, or is difficult to read, wrap all arguments on a new line with a 1 tab indent.
+            AnotherLongFunctionNameThatCausesLineWrappingProblems(
+                veryLongArgumentName, veryLongArgumentName, veryLongArgumentName);
+        }
     }
-
-    public void ExpressionBodies() {
-      // For simple lambdas, fit on one line if possible, no brackets or braces required.
-      Func<int, int> increment = x => x + 1;
-
-      // Closing brace aligns with first character on line that includes the opening brace.
-      Func<int, int, long> difference1 = (x, y) => {
-        long diff = (long)x - y;
-        return diff >= 0 ? diff : -diff;
-      };
-
-      // If defining after a continuation line break, indent the whole body.
-      Func<int, int, long> difference2 =
-          (x, y) => {
-            long diff = (long)x - y;
-            return diff >= 0 ? diff : -diff;
-          };
-
-      // Inline lambda arguments also follow these rules. Prefer a leading newline before
-      // groups of arguments if they include lambdas.
-      CallWithDelegate(
-          (x, y) => {
-            long diff = (long)x - y;
-            return diff >= 0 ? diff : -diff;
-          });
-    }
-
-    void DoNothing() {}                             // Empty blocks may be concise.
-
-    // If possible, wrap arguments by aligning newlines with the first argument.
-    void AVeryLongFunctionNameThatCausesLineWrappingProblems(int longArgumentName,
-                                                             int p1, int p2) {}
-
-    // If aligning argument lines with the first argument doesn't fit, or is difficult to
-    // read, wrap all arguments on new lines with a 4 space indent.
-    void AnotherLongFunctionNameThatCausesLineWrappingProblems(
-        int longArgumentName, int longArgumentName2, int longArgumentName3) {}
-
-    void CallingLongFunctionName() {
-      int veryLongArgumentName = 1234;
-      int shortArg = 1;
-      // If possible, wrap arguments by aligning newlines with the first argument.
-      AnotherLongFunctionNameThatCausesLineWrappingProblems(shortArg, shortArg,
-                                                            veryLongArgumentName);
-      // If aligning argument lines with the first argument doesn't fit, or is difficult to
-      // read, wrap all arguments on new lines with a 4 space indent.
-      AnotherLongFunctionNameThatCausesLineWrappingProblems(
-          veryLongArgumentName, veryLongArgumentName, veryLongArgumentName);
-    }
-  }
 }
 ```
 
@@ -185,6 +191,7 @@ namespace MyNamespace {                             // Namespaces are PascalCase
 *   Variables and fields that can be made `const` should always be made `const`.
 *   If `const` isn’t possible, `readonly` can be a suitable alternative.
 *   Prefer named constants to magic numbers.
+*   Use `var` wherever possible in place of simple and complex types (more on this below).
 
 ### IEnumerable vs IList vs IReadOnlyList
 *   For inputs use the most restrictive collection type possible, for example
@@ -217,8 +224,7 @@ int SomeProperty => _someProperty
 ```
 
 *   Judiciously use expression body syntax in lambdas and properties.
-*   Don’t use on method definitions. This will be reviewed when C# 7 is live,
-    which uses this syntax heavily.
+*   Don’t use on method definitions.
 *   As with methods and other scoped blocks of code, align the closing with the
     first character of the line that includes the opening brace. See sample code
     for examples.
@@ -322,18 +328,26 @@ int SomeProperty => _someProperty
     Type aliases will not be available for external users.
 
 ### Object Initializer syntax
+Beginning with C# 9.0, constructor invocation expressions are target-typed. That is, if a target type of an expression is known, you can omit a type name, as the following example shows:
+
 For example:
 
 ```c#
-var x = new SomeClass {
-  Property1 = value1,
-  Property2 = value2,
+List<int> xs = new();
+List<int> ys = new(capacity: 10_000);
+List<int> zs = new() { Capacity = 20_000 };
+
+Dictionary<int, List<int>> lookup = new()
+{
+    [1] = new() { 1, 2, 3 },
+    [2] = new() { 5, 8, 3 },
+    [5] = new() { 1, 0, 4 }
 };
 ```
 
-*   Object Initializer Syntax is fine for ‘plain old data’ types.
-*   Avoid using this syntax for classes or structs with constructors.
-*   If splitting across multiple lines, indent one block level.
+As the preceding example shows, you always use parentheses in a target-typed new expression.
+
+If a target type of a new expression is unknown (for example, when you use the var keyword), you must specify a type name.
 
 ### Namespace naming
 *   In general, namespaces should be no more than 2 levels deep.
@@ -377,12 +391,12 @@ removing items from containers while iterating. There are a couple of options:
 
     *   When the type is obvious - e.g. `var apple = new Apple();`, or `var
         request = Factory.Create<HttpRequest>();`
+    *   When working with basic types - e.g. `var success = true;`
     *   For transient variables that are only passed directly to other methods -
         e.g. `var item = GetItem(); ProcessItem(item);`
 
 *   Discouraged:
 
-    *   When working with basic types - e.g. `var success = true;`
     *   When working with compiler-resolved built-in numeric types - e.g. `var
         number = 12 * ReturnsFloat();`
     *   When users would clearly benefit from knowing the type - e.g. `var
