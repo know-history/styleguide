@@ -1,16 +1,9 @@
-# Overview 
+# SQL Server at Know History Guide
 
-In most programming languages we use many naming conventions, like PascalCase, camelCase, under_score and so on, on a daily basis. Which naming convention is used, depends on each person and organization. This document aims to clarify naming standards for SQL Server under the Know History umbrella.
-
-## Benefits
-
-- Provides a specific standard for naming all objects so they look the same or related to the same group
-- Reduces the effort needed to read and understand source code after a long interval of time
-- Enhances the clarity in case of potential ambiguity
-- Provides a better understanding to new people reading database objects for the first time
-- Sorts all database objects, reducing time to determine any specific database object
+This style guide is for SQL Server code and database development, and is the default style for T-SQL at Know History. Which naming convention is used, depends on each person and organization. This document aims to clarify naming standards for SQL Server under the Know History umbrella.
 
 ---
+
 # Naming Conventions
 
 ## Tables
