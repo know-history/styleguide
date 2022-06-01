@@ -209,7 +209,7 @@ SELECT
     p.PersonId,
     a.AncestorId
 FROM Registry.Person p
-INNER JOIN Ancestor a ON
+INNER JOIN Registry.Ancestor a ON
     a.AncestorId = p.AncestorId
 WHERE
     p.KnowHistoryId = '123'
@@ -304,7 +304,7 @@ SET NOCOUNT ON
 
 BEGIN TRY
     BEGIN TRANSACTION
-        DELETE FROM Person
+        DELETE FROM Registry.Person
         WHERE PersonId = @personId
     COMMIT TRANSACTION
 END TRY
@@ -316,8 +316,7 @@ BEGIN CATCH
 
     IF (XACT_STATE()) = -1
     BEGIN
-        PRINT
-            N'The transaction is in an uncommittable state. Rolling back transaction.'
+        PRINT N'The transaction is in an uncommittable state. Rolling back transaction.'
 
         ROLLBACK TRANSACTION
     END
